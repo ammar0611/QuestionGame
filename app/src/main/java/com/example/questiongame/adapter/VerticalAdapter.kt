@@ -12,22 +12,11 @@ import com.example.questiongame.model.response.CatData
 
 class VerticalAdapter(val viewModel: CategoryViewModel) : RecyclerView.Adapter<VerticalAdapter.ViewHolder>() {
 
-//    object ss{
-//        val selectedItems = mutableSetOf<Int>()
-//
-//    }
-
     private var arrayList = CatAllData()
     private lateinit var mContext: Context
-    private lateinit var listener: OnItemClickListener
 
-    interface OnItemClickListener {
-        fun onClickItem(position: Int)
-    }
-
-    fun setData(list: CatAllData, listener: OnItemClickListener) {
+    fun setData(list: CatAllData) {
         this.arrayList = list
-        this.listener = listener
         notifyDataSetChanged()
     }
 
@@ -50,9 +39,9 @@ class VerticalAdapter(val viewModel: CategoryViewModel) : RecyclerView.Adapter<V
             if (data1.id !in uniqueid){
                 uniqueid.add(data1.id!!)
                 for (intItem in intList) {
-                        if (data1.id == intItem) {
-                            dataValue.add(data1)
-                        }
+                    if (data1.id == intItem) {
+                        dataValue.add(data1)
+                    }
                 }
             }
         }

@@ -5,9 +5,19 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Test"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    tools:context=".ui.Test">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <nl.dionsegijn.konfetti.xml.KonfettiView
+            android:id="@+id/konfettiView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <LinearLayout
         android:id="@+id/top_view"
         android:layout_width="match_parent"
@@ -20,25 +30,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-            <com.example.questiongame.utils.ScalableVideoView
-                android:id="@+id/video_view"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
+
             <ImageView
-                android:id="@+id/img_view"
+                android:id="@+id/image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/news_6"/>
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:scaleType="fitXY"/>
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/top_right"
             android:layout_weight="1.2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_nextquestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Question"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:visibility="visible"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:text="Points"
+                android:layout_above="@id/txt_points"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_points"
+                android:layout_width="wrap_content"
+                android:text="0"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="40sp"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/bottom_view"
@@ -111,30 +141,31 @@
                             android:background="#000D56"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/opB"
+                        android:id="@+id/ll_optionB"
                         android:layout_weight="1"
                         android:layout_margin="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/school_2">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="B"
-                                android:gravity="center"
-                                android:padding="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:background="#3747A0"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Option"
-                                android:gravity="center"
-                                android:padding="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:background="#000D56"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="B"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="#3747A0"/>
+                        <TextView
+                            android:id="@+id/txt_optionB"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Option"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="#000D56"/>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -143,59 +174,63 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
                     <LinearLayout
-                        android:id="@+id/opC"
+                        android:id="@+id/ll_optionC"
                         android:layout_weight="1"
                         android:layout_margin="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/quiz_1">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="C"
-                                android:gravity="center"
-                                android:padding="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:background="#3747A0"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Option"
-                                android:gravity="center"
-                                android:padding="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:background="#000D56"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="C"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="#3747A0"/>
+                        <TextView
+                            android:id="@+id/txt_optionC"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Option"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="#000D56"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/opD"
+                        android:id="@+id/ll_optionD"
                         android:layout_weight="1"
                         android:layout_margin="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/school_2">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="D"
-                                android:gravity="center"
-                                android:padding="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:background="#3747A0"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Option"
-                                android:gravity="center"
-                                android:padding="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:background="#000D56"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="D"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="#3747A0"/>
+                        <TextView
+                            android:id="@+id/txt_optionD"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Option"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="#000D56"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

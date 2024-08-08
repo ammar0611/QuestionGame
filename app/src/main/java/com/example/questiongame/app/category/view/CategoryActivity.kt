@@ -42,6 +42,7 @@ class CategoryActivity : AppCompatActivity() {
         setupObserver()
 
     }
+
     private fun setupObserver() {
         viewModel.getCategoryResponse.observe(this) {
             when (it) {
@@ -50,14 +51,11 @@ class CategoryActivity : AppCompatActivity() {
                         Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show()
                         showProgress(this,true)
                     }
-                    else{ hideProgress() }
+                    else { hideProgress() }
                 }
 
                 is Resource.Success -> {
-                    verticalAdapter?.setData(it.response?.data!!, object : VerticalAdapter.OnItemClickListener {
-                        override fun onClickItem(position: Int) {
-                        }
-                    })
+                    verticalAdapter?.setData(it.response?.data!!)
                 }
 
                 is Resource.Error -> {

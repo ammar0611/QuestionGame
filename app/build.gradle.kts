@@ -69,5 +69,11 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-compiler:2.47")
 
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
+    implementation ("com.github.mmoamenn:LuckyWheel_Android:0.3.0")
+    implementation ("com.github.caneryilmaz52:LuckyWheelView:1.0.0")
+
+    implementation ("nl.dionsegijn:konfetti-xml:2.0.4")
 }

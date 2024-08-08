@@ -17,6 +17,7 @@ import com.example.questiongame.app.getquestion.viewmodel.GetQuestionViewModel
 import com.example.questiongame.databinding.ActivityGetQuestionDetailsBinding
 import com.example.questiongame.model.response.Data
 import com.example.questiongame.ui.PlayQuestionActivity
+import com.example.questiongame.utils.Pref
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
@@ -37,9 +38,6 @@ class GetQuestionDetails : AppCompatActivity() {
     }
 
     private fun initView(){
-        Handler().postDelayed({
-            binding.btnNext.visibility = View.VISIBLE
-        }, 3000)
         val bundle = intent.extras
         when (bundle?.getString("category")) {
             "quiz1" -> {
@@ -86,19 +84,27 @@ class GetQuestionDetails : AppCompatActivity() {
                     val askedList = it.response?.data?.askedQuestionslist
                     val list:List<String> = askedList.toString().split(",")
                     val newList:MutableList<Data> = mutableListOf()
+                    val userAgeId = Pref.getValue("ageId")
+                    Log.e("USER AGE ID",userAgeId)
 
                     for(data in it.response?.data!!.data){
+                        val ageList:List<String> = data.ageId.toString().split(",")
                         if(data.questionMasterId.toString() !in list){
-                            newList.add(data)
+                            if (data.questionMasterId.toString() !in Pref.getList("askedQuestion")) {
+                                if (userAgeId in ageList) {
+                                    newList.add(data)
+                                }
+                            }
                         }
                     }
-                    Log.d("ALLDATA Count",it.response.data!!.data.size.toString())
-                    Log.d("ASKEDQ Count",list.size.toString())
-                    Log.d("NEWDATA Count",newList.size.toString())
-                    Log.d("NEWDATA",newList.toString())
+                    Log.w("ALL DATA Count",it.response.data!!.data.size.toString())
+                    Log.w("ASKEDQ Count",list.size.toString())
+                    Log.w("NEW DATA Count",newList.size.toString())
+                    Log.w("NEW DATA",newList.toString())
                     val sendList = newList[Random.nextInt(newList.size)]
-                    Log.e("SENDLIST",sendList.toString())
-                    binding.btnNext.setOnClickListener {
+                    Log.e("SEND LIST",sendList.toString())
+
+                    if (sendList.question!!.isNotEmpty()){
                         val intent = Intent(this,PlayQuestionActivity::class.java)
                         intent.putExtras(sendQuestion(sendList))
                         startActivity(intent)
@@ -125,7 +131,8 @@ class GetQuestionDetails : AppCompatActivity() {
         val correct_answer = list.correctAnswer
         val image_url = list.imageURL
         val video_url = list.videoURL
-        val arraylist = arrayOf(question,answer1,answer2,answer3,answer4,correct_answer,image_url,video_url)
+        val questionId = list.questionMasterId.toString()
+        val arraylist = arrayOf(question,answer1,answer2,answer3,answer4,correct_answer,image_url,video_url,questionId)
         val bundle:Bundle= Bundle()
         bundle.putStringArray("LIST",arraylist)
         return bundle

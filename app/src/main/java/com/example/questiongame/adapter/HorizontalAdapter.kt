@@ -20,10 +20,7 @@ class HorizontalAdapter(val data: List<CatData>,val viewModel: CategoryViewModel
     private lateinit var mContext: Context
 
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): HorizontalAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup,viewType: Int):HorizontalAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         mContext = parent.context
         val binding = HorizontalRecyclerBinding.inflate(inflater, parent, false)
@@ -42,27 +39,28 @@ class HorizontalAdapter(val data: List<CatData>,val viewModel: CategoryViewModel
                 viewModel.removeButton()
                 selectedItems.remove(data[position].id)
                 holder.layout.setBackgroundColor(0)
-            } else if (selectedItems.size < 6) {
+            }
+            else if (selectedItems.size < 6) {
                 viewModel.removeButton()
                 selectedItems.add(data[position].id!!)
                 holder.layout.setBackgroundColor(Color.GREEN)
             }
-            else
-            { Toast.makeText(mContext, "Cant Add more than 6", Toast.LENGTH_SHORT).show()
-            viewModel.showButton()
+            else {
+                Toast.makeText(mContext, "Cant Add more than 6", Toast.LENGTH_SHORT).show()
+                viewModel.showButton()
             }
             Log.e("list",selectedItems.toString())
             if(selectedItems.size == 6){
                 viewModel.showButton()
             }
         }
+
         val imageUrl= BASEURL+data[position].buttonImage
         Glide.with(holder.imgView.context)
             .load(imageUrl)
             .placeholder(R.drawable.download) // Placeholder image while loading
             .error(R.drawable.error_image) // Image to display on error
             .into(holder.imgView)
-
     }
 
     override fun getItemCount(): Int {
@@ -72,7 +70,7 @@ class HorizontalAdapter(val data: List<CatData>,val viewModel: CategoryViewModel
     inner class ViewHolder(private val binding:HorizontalRecyclerBinding):
         RecyclerView.ViewHolder(binding.root) {
             val txtImg=binding.txtImg
-            val imgView=binding.imgView
+        val imgView=binding.imgView
         val layout = binding.mainLayout
         val item_id = binding.itemId
         }
