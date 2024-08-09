@@ -45,26 +45,53 @@ class Test : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val party = Party(
-            speed = 2f,
-            maxSpeed = 30f,
-            damping = 0.9f,
-            spread = 360,
-            colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
-            position = Position.Relative(0.5, 0.3),
-            emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100)
+        val wheeldata = ArrayList<WheelData>()
+        wheeldata.add(
+            WheelData("quiz1", Color.BLACK, Color.RED,
+                BitmapFactory.decodeResource(resources, R.drawable.quiz_1))
         )
-        binding.konfettiView.bringToFront()
-        binding.llOptionA.setOnClickListener {
-            binding.konfettiView.start(party)
+        wheeldata.add(WheelData("school2", Color.BLACK, Color.GRAY,
+            BitmapFactory.decodeResource(resources, R.drawable.school_2)))
+        wheeldata.add(WheelData("quick3", Color.BLACK, Color.BLUE,
+            BitmapFactory.decodeResource(resources, R.drawable.quick_3)))
+        wheeldata.add(WheelData("music4", Color.BLACK, Color.CYAN,
+            BitmapFactory.decodeResource(resources, R.drawable.music_4)))
+        wheeldata.add(WheelData("tv5", Color.BLACK, Color.MAGENTA,
+            BitmapFactory.decodeResource(resources, R.drawable.tv_5)))
+        wheeldata.add(WheelData("news6", Color.BLACK, Color.YELLOW,
+            BitmapFactory.decodeResource(resources, R.drawable.news_6)))
+        wheeldata.add(WheelData("random", Color.BLACK, Color.GREEN,
+            BitmapFactory.decodeResource(resources, R.drawable.random_7)))
+        binding.wheel.setWheelData(wheeldata)
+        binding.btnSpin.setOnClickListener {
+            binding.wheel.rotateWheel()
         }
-//        setVideo(binding.videoView, BASEURL+"storage/questions/videos/91Fx71619175503092.m4v")
-    }
 
-    fun setVideo(view: VideoView, url: String) {
-        val uri: Uri = Uri.parse(url)
-        view.setVideoURI(uri)
-        view.start()
-        view.setOnPreparedListener { mp -> mp.isLooping = true }
+
+        val list = listOf(0.1,0.2,0.1,0.5,0.3,0.1,2.0)
+        val sortedList=list.sorted()
+        Log.e("sorted list",sortedList.toString())
+
+        var cummlative_prob = 0.0
+        var prev_i = 0.0
+        val random1 = Random.nextDouble(0.1,3.3 )
+        val random = String.format("%.1f", random1).toDouble()
+        Log.e("Random num",random.toString())
+        for(i in sortedList){
+            cummlative_prob += i
+            if(cummlative_prob >= random){
+                if (cummlative_prob > random){
+                    binding.wheel.setTarget(target = list.indexOf(prev_i))
+                    break
+                }
+                binding.wheel.setTarget(target = list.indexOf(i))
+                break
+            }
+            prev_i = i
+        }
+        binding.wheel.setTargetReachListener { wheeldata ->
+            Log.e("wheel", wheeldata.text)
+        }
+
     }
 }

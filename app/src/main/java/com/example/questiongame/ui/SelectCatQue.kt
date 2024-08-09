@@ -12,6 +12,7 @@ import com.example.questiongame.R
 import com.example.questiongame.app.category.view.CategoryActivity
 import com.example.questiongame.app.getquestion.view.GetQuestionDetails
 import com.example.questiongame.databinding.ActivitySelectCatQueBinding
+import kotlin.random.Random
 
 class SelectCatQue : AppCompatActivity(){
     private lateinit var binding:ActivitySelectCatQueBinding
@@ -35,14 +36,31 @@ class SelectCatQue : AppCompatActivity(){
             BitmapFactory.decodeResource(resources, R.drawable.tv_5)))
         wheeldata.add(WheelData("news6", Color.BLACK, Color.YELLOW,
             BitmapFactory.decodeResource(resources, R.drawable.news_6)))
+
         binding.wheel.setWheelData(wheeldata)
         binding.btnSpin.setOnClickListener {
             binding.wheel.rotateWheel()
         }
-        binding.wheel.setTarget(
-            target = 0,
-            rotateRandomTarget = true
-        )
+        val list = listOf(0.1,0.2,0.1,0.5,0.3,0.1,2.0)
+        val sortedList=list.sorted()
+        Log.e("sorted list",sortedList.toString())
+        var cummlative_prob = 0.0
+        var prev_i = 0.0
+        val random1 = Random.nextDouble(0.1,3.3 )
+        val random = String.format("%.1f", random1).toDouble()
+        Log.e("Random num",random.toString())
+        for(i in sortedList){
+            cummlative_prob += i
+            if(cummlative_prob >= random){
+                if (cummlative_prob > random){
+                    binding.wheel.setTarget(target = list.indexOf(prev_i))
+                    break
+                }
+                binding.wheel.setTarget(target = list.indexOf(i))
+                break
+            }
+            prev_i = i
+        }
         binding.wheel.setRotationViaSwipe(true,1)
         binding.wheel.setTargetReachListener{ wheeldata ->
             Log.e("wheel",wheeldata.text)
