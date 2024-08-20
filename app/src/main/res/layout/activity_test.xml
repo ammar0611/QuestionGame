@@ -9,15 +9,29 @@
     tools:context=".ui.Test">
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_spin"
-        android:layout_toRightOf="@id/wheel"
+        android:layout_toRightOf="@id/rl"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Spin"/>
 
-    <com.caneryilmaz.apps.luckywheel.ui.LuckyWheelView
-        android:id="@+id/wheel"
-        android:layout_width="450dp"
-        android:layout_height="450dp"
-        android:layout_centerInParent="true" />
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/sep">
+
+        <com.questions.game.spinner.LuckySpinnerView
+            android:id="@+id/wheel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="100dp"
+            android:padding="20dp"
+            app:lswCursor="@drawable/pointer"
+            app:lswBackgroundColor="#FFFFFF"
+            app:lswEdgeColor="#793BE6"
+            app:lswEdgeWidth="0"
+            app:lswPlaySound="true"
+            app:lswTopTextColor="@color/white" />
+    </RelativeLayout>
 </RelativeLayout>

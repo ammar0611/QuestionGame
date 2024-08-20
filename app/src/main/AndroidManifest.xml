@@ -21,7 +21,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.PlayQuestionActivity"
+            android:name=".app.playquestion.PlayQuestionActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
@@ -33,7 +33,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.SelectCatQue"
+            android:name=".app.spinwheel.SelectCatQue"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -41,11 +41,11 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.GameDetails"
+            android:name=".app.gamedetails.GameDetails"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.HomeActivity"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>

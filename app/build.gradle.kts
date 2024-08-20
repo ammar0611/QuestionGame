@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.questiongame"
+    namespace = "com.questions.game"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.questiongame"
+        applicationId = "com.questions.game"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
@@ -64,7 +64,7 @@ dependencies {
 
     implementation("com.google.android.material:material:1.13.0-alpha04")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
 
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-compiler:2.47")
@@ -76,4 +76,5 @@ dependencies {
     implementation ("com.github.caneryilmaz52:LuckyWheelView:1.0.0")
 
     implementation ("nl.dionsegijn:konfetti-xml:2.0.4")
+    implementation ("com.airbnb.android:lottie:6.5.0")
 }

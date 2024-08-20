@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GameDetails"
+
+    tools:context=".app.gamedetails.GameDetails"
     android:orientation="vertical"
     android:padding="20dp">
     <LinearLayout
