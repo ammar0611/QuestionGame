@@ -10,6 +10,9 @@ import java.util.concurrent.TimeUnit
 
 object Utils {
 
+    var isSkippable = true
+    var is15sec = true
+
     val party = Party(speed = 2f,maxSpeed = 30f,damping = 0.9f,spread = 360,
         colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
         position = Position.Relative(0.5, 0.3),

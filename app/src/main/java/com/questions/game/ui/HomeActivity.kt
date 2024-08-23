@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.questions.game.app.gamedetails.GameDetails
 import com.questions.game.databinding.ActivityMainBinding
+import com.questions.game.utils.Pref
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
@@ -12,6 +13,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Pref.initialize(this)
+
+        updateQbText()
 
         binding.btnPlaynewgame.setOnClickListener {
             startActivity(Intent(this, GameDetails::class.java))
@@ -20,5 +24,9 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, Test::class.java))
         }
 
+    }
+
+    private fun updateQbText() {
+        binding.txtMainqb.text = Pref.getIntValue("gamePoints").toString()
     }
 }

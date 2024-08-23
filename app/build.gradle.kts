@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id ("dagger.hilt.android.plugin")
     id ("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -77,4 +78,8 @@ dependencies {
 
     implementation ("nl.dionsegijn:konfetti-xml:2.0.4")
     implementation ("com.airbnb.android:lottie:6.5.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+    implementation("com.google.firebase:firebase-firestore")
+
 }

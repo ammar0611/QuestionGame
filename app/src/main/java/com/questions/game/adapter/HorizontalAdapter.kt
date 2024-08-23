@@ -50,7 +50,7 @@ class HorizontalAdapter(val data: List<CatDataRes>, private val viewModel: Categ
                 viewModel.showButton()
             }
             e("list",selectedItems.toString())
-            if(selectedItems.size == 6){
+            if(selectedItems.size >= 4){
                 viewModel.showButton()
             }
         }

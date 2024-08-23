@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169393624655",
+    "project_id": "question-staging-2b336",
+    "storage_bucket": "question-staging-2b336.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169393624655:android:433bf2b8020f1c700bbc3a",
+        "android_client_info": {
+          "package_name": "com.questions.game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEAe7LWKzWR4c5D95yB3DNFJa-yQ36h3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,23 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HomeActivity"
-    android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".ui.HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/qb_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp"
+        android:layout_alignParentRight="true">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QB = "
+            android:textSize="16sp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_mainqb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_playnewgame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="Play New Game"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_resumegame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btn_playnewgame"
+        android:layout_centerInParent="true"
         android:text="Resume Game"/>
 
-</LinearLayout>
+</RelativeLayout>

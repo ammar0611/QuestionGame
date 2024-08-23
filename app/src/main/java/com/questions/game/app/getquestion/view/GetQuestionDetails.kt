@@ -35,32 +35,32 @@ class GetQuestionDetails : AppCompatActivity() {
         val bundle = intent.extras
         when (bundle?.getString("category")) {
 //            Here Index of spin wheel is get and set to viewModel
-            "5" -> {
+            "1" -> {
                 binding.img.setImageResource(R.drawable.quiz_1)
                 viewModel.getCategoryNum = 1
             }
 
-            "0" -> {
+            "2" -> {
                 binding.img.setImageResource(R.drawable.school_2)
                 viewModel.getCategoryNum = 2
             }
 
-            "1" -> {
+            "3" -> {
                 binding.img.setImageResource(R.drawable.quick_3)
                 viewModel.getCategoryNum = 3
             }
 
-            "2" -> {
+            "4" -> {
                 binding.img.setImageResource(R.drawable.music_4)
                 viewModel.getCategoryNum = 4
             }
 
-            "3" -> {
+            "5" -> {
                 binding.img.setImageResource(R.drawable.tv_5)
                 viewModel.getCategoryNum = 5
             }
 
-            "4" -> {
+            "6" -> {
                 binding.img.setImageResource(R.drawable.news_6)
                 viewModel.getCategoryNum = 6
             }
@@ -127,7 +127,8 @@ class GetQuestionDetails : AppCompatActivity() {
         val imageUrl = list.imageURL
         val videoUrl = list.videoURL
         val questionId = list.questionMasterId.toString()
-        val arraylist = arrayOf(question,answer1,answer2,answer3,answer4,correctAnswer,imageUrl,videoUrl,questionId)
+        val categoryId = list.categoryId.toString()
+        val arraylist = arrayOf(question,answer1,answer2,answer3,answer4,correctAnswer,imageUrl,videoUrl,questionId,categoryId)
         val bundle = Bundle()
         bundle.putStringArray("LIST",arraylist)
         return bundle

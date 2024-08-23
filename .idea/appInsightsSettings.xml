@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.questions.game" />
+                  <option name="mobileSdkAppId" value="1:169393624655:android:433bf2b8020f1c700bbc3a" />
+                  <option name="projectId" value="question-staging-2b336" />
+                  <option name="projectNumber" value="169393624655" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
