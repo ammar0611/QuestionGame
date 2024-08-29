@@ -15,12 +15,16 @@ import com.questions.game.utils.Constant.BASEURL
 import com.questions.game.utils.Constant.selectedItems
 import com.questions.game.utils.LogUtil.e
 
-class HorizontalAdapter(val data: List<CatDataRes>, private val viewModel: CategoryViewModel) : RecyclerView.Adapter<HorizontalAdapter.ViewHolder>() {
+class HorizontalAdapter(val data: List<CatDataRes>, private val viewModel: CategoryViewModel) :
+    RecyclerView.Adapter<HorizontalAdapter.ViewHolder>() {
 
     private lateinit var mContext: Context
 
 
-    override fun onCreateViewHolder(parent: ViewGroup,viewType: Int):HorizontalAdapter.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): HorizontalAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         mContext = parent.context
         val binding = HorizontalRecyclerBinding.inflate(inflater, parent, false)
@@ -39,23 +43,21 @@ class HorizontalAdapter(val data: List<CatDataRes>, private val viewModel: Categ
                 viewModel.removeButton()
                 selectedItems.remove(data[position].id)
                 holder.layout.setBackgroundColor(0)
-            }
-            else if (selectedItems.size < 6) {
+            } else if (selectedItems.size < 6) {
                 viewModel.removeButton()
                 selectedItems.add(data[position].id!!)
                 holder.layout.setBackgroundColor(Color.GREEN)
-            }
-            else {
+            } else {
                 Toast.makeText(mContext, "Cant Add more than 6", Toast.LENGTH_SHORT).show()
                 viewModel.showButton()
             }
-            e("list",selectedItems.toString())
-            if(selectedItems.size >= 4){
+            e("list", selectedItems.toString())
+            if (selectedItems.size >= 4) {
                 viewModel.showButton()
             }
         }
 
-        val imageUrl= BASEURL+data[position].buttonImage
+        val imageUrl = BASEURL + data[position].buttonImage
         Glide.with(holder.imgView.context)
             .load(imageUrl)
             .placeholder(R.drawable.download) // Placeholder image while loading
@@ -67,11 +69,11 @@ class HorizontalAdapter(val data: List<CatDataRes>, private val viewModel: Categ
         return data.size
     }
 
-    inner class ViewHolder(binding:HorizontalRecyclerBinding):
+    inner class ViewHolder(binding: HorizontalRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            val txtImg=binding.txtImg
-        val imgView=binding.imgView
+        val txtImg = binding.txtImg
+        val imgView = binding.imgView
         val layout = binding.mainLayout
         val itemId = binding.itemId
-        }
+    }
 }

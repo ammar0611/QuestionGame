@@ -10,4 +10,6 @@
     <color name="green">#74B946</color>
     <color name="dark_green">#BACF37</color>
     <color name="yellow">#F3CC2D</color>
+    <color name="correct_green">#FF4BBD04</color>
+    <color name="wrong_red">#FFF22727</color>
 </resources>

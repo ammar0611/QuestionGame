@@ -5,10 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.questions.game.app.gamedetails.GameDetails
 import com.questions.game.databinding.ActivityMainBinding
+import com.questions.game.utils.Constant
 import com.questions.game.utils.Pref
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,6 +28,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun updateQbText() {
-        binding.txtMainqb.text = Pref.getIntValue("gamePoints").toString()
+        binding.txtMainqb.text = Pref.getIntValue(Constant.userScorePref).toString()
     }
 }

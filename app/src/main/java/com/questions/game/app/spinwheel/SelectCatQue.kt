@@ -3,11 +3,9 @@ package com.questions.game.app.spinwheel
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.questions.game.R
 import com.questions.game.app.category.view.CategoryActivity
 import com.questions.game.app.getquestion.view.GetQuestionDetails
 import com.questions.game.databinding.ActivitySelectCatQueBinding
@@ -57,25 +55,29 @@ class SelectCatQue : AppCompatActivity() {
         luckySpinnerView.setLuckyRoundItemSelectedListener { index ->
             val bundle = Bundle()
             val intent = Intent(this, GetQuestionDetails::class.java)
-            bundle.putString("category",getCategoryId(index).toString())
+            bundle.putString("category", getCategoryId(index).toString())
             intent.putExtras(bundle)
             startActivity(intent)
         }
     }
 
-    private fun getCategoryId(index: Int):Int{
-       return when(index){
-            5 ->  1
-            0 ->  2
-            1 ->  3
-            2 ->  4
-            3 ->  5
-            4 ->  6
-           else ->  1
-       }
+    private fun getCategoryId(index: Int): Int {
+        return when (index) {
+            5 -> 1
+            0 -> 2
+            1 -> 3
+            2 -> 4
+            3 -> 5
+            4 -> 6
+            else -> 1
+        }
     }
 
-    private fun addData(topText: String, secondaryText: String, color: Int): SpinWheelItemSectionModel {
+    private fun addData(
+        topText: String,
+        secondaryText: String,
+        color: Int
+    ): SpinWheelItemSectionModel {
         val spinWheelItemSectionModel = SpinWheelItemSectionModel()
         spinWheelItemSectionModel.topText = topText
         spinWheelItemSectionModel.secondaryText = secondaryText
@@ -90,7 +92,7 @@ class SelectCatQue : AppCompatActivity() {
         e("sorted list", sortedList.toString())
         var cumulativeProb = 0.0
         var prevI = 0.1
-        
+
         val random1 = Random.nextDouble(0.1, 3.3)
         val random = String.format("%.1f", random1).toDouble()
         e("Random num", random.toString())
@@ -112,7 +114,12 @@ class SelectCatQue : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startActivity(Intent(this,CategoryActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
+        startActivity(
+            Intent(
+                this,
+                CategoryActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
         finish()
     }
 

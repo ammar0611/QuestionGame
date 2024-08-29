@@ -15,16 +15,18 @@ import android.widget.TextView
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.questions.game.R
 import com.questions.game.app.getquestion.view.GetQuestionDetails
 import com.questions.game.databinding.ActivityPlayQuestionBinding
 import com.questions.game.app.spinwheel.SelectCatQue
+import com.questions.game.utils.Constant
 import com.questions.game.utils.Constant.BASEURL
 import com.questions.game.utils.Utils.blink
-import com.questions.game.utils.Constant.color_correct
-import com.questions.game.utils.Constant.color_wrong
 import com.questions.game.utils.LogUtil.e
 import com.questions.game.utils.Pref
+import com.questions.game.utils.Utils
 import com.questions.game.utils.Utils.is15sec
 import com.questions.game.utils.Utils.isSkippable
 
@@ -37,12 +39,11 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
     private lateinit var timer: CountDownTimer
     private lateinit var questionId: String
     private lateinit var categoryId: String
-    lateinit var bg_music:MediaPlayer
-    lateinit var correct_sound:MediaPlayer
-    lateinit var wrong_sound:MediaPlayer
-    lateinit var last_4sec:MediaPlayer
-    lateinit var time_out:MediaPlayer
-
+    private lateinit var bgMusic: MediaPlayer
+    private lateinit var correctSound: MediaPlayer
+    private lateinit var wrongSound: MediaPlayer
+    lateinit var last4sec: MediaPlayer
+    lateinit var timeOut: MediaPlayer
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,7 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
         )
         binding = ActivityPlayQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Pref.initialize(this)
         initView()
 
     }
@@ -62,14 +64,14 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
         setGamePoints()
         is15sec = true
 
-        bg_music = MediaPlayer.create(this,R.raw.bg_normal_sound)
-        correct_sound = MediaPlayer.create(this,R.raw.correct_answer)
-        wrong_sound = MediaPlayer.create(this,R.raw.wrong_answer)
-        last_4sec = MediaPlayer.create(this,R.raw.last_4sec)
-        time_out = MediaPlayer.create(this,R.raw.time_out)
+        bgMusic = MediaPlayer.create(this, R.raw.bg_normal_sound)
+        correctSound = MediaPlayer.create(this, R.raw.correct_answer)
+        wrongSound = MediaPlayer.create(this, R.raw.wrong_answer)
+        last4sec = MediaPlayer.create(this, R.raw.last_4sec)
+        timeOut = MediaPlayer.create(this, R.raw.time_out)
 
-        bg_music.start()
-        bg_music.isLooping = true
+        bgMusic.start()
+        bgMusic.isLooping = true
 
         binding.llOptionA.setOnClickListener(this)
         binding.llOptionB.setOnClickListener(this)
@@ -120,14 +122,14 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
                 timeRemaining = millisUntilFinished
                 binding.txtQueTimer.text = (millisUntilFinished / 1000).toString()
                 if (millisUntilFinished in 4000..4999) {
-                    if (!last_4sec.isPlaying) {  // Ensure the sound is not already playing
-                        last_4sec.start()
+                    if (!last4sec.isPlaying) {  // Ensure the sound is not already playing
+                        last4sec.start()
                     }
                 }
             }
 
             override fun onFinish() {
-                time_out.start()
+                timeOut.start()
             }
         }.start()
     }
@@ -140,7 +142,7 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun setGamePoints() {
-        binding.txtPoints.text = Pref.getIntValue("gamePoints").toString()
+        binding.txtPoints.text = Pref.getIntValue(Constant.userScorePref).toString()
     }
 
     private fun remove2option() {
@@ -191,7 +193,7 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
 
             R.id.btn_add15s -> {
                 if (is15sec) {
-                    timer?.cancel()
+                    timer.cancel()
                     startTimer(timeRemaining + 15000)
                     is15sec = false
                 }
@@ -205,33 +207,44 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
             binding.lottieView.bringToFront()
             binding.lottieView.playAnimation()
             ll.blink(5)
-            correct_sound.start()
-            textView.setBackgroundColor(color_correct)
-            Pref.setIntValue("gamePoints", Pref.getIntValue("gamePoints") + 10)
+            correctSound.start()
+            textView.setBackgroundColor(getResources().getColor(R.color.correct_green))
+            Pref.setIntValue(Constant.userScorePref, Pref.getIntValue(Constant.userScorePref) + 10)
+            Pref.setIntValue(
+                Constant.userTotalCorrectAnswerPref,
+                Pref.getIntValue(Constant.userTotalCorrectAnswerPref) + 1
+            )
             e("PREF", "Pref + 10")
         } else {
-            if (Pref.getIntValue("gamePoints") > 0) {
-                Pref.setIntValue("gamePoints", Pref.getIntValue("gamePoints") - 1)
+            if (Pref.getIntValue(Constant.userScorePref) > 0) {
+                Pref.setIntValue(
+                    Constant.userScorePref,
+                    Pref.getIntValue(Constant.userScorePref) - 1
+                )
             }
+            Pref.setIntValue(
+                Constant.userTotalWrongAnswerPref,
+                Pref.getIntValue(Constant.userTotalWrongAnswerPref) + 1
+            )
             e("PREF", "Pref - 1")
             ll.blink(5)
-            textView.setBackgroundColor(color_wrong)
-            wrong_sound.start()
+            textView.setBackgroundColor(getResources().getColor(R.color.wrong_red))
+            wrongSound.start()
             when (correctAnswer) {
                 "A" -> {
-                    binding.txtOptionA.setBackgroundColor(color_correct)
+                    binding.txtOptionA.setBackgroundColor(getResources().getColor(R.color.correct_green))
                 }
 
                 "B" -> {
-                    binding.txtOptionB.setBackgroundColor(color_correct)
+                    binding.txtOptionB.setBackgroundColor(getResources().getColor(R.color.correct_green))
                 }
 
                 "C" -> {
-                    binding.txtOptionC.setBackgroundColor(color_correct)
+                    binding.txtOptionC.setBackgroundColor(getResources().getColor(R.color.correct_green))
                 }
 
                 "D" -> {
-                    binding.txtOptionD.setBackgroundColor(color_correct)
+                    binding.txtOptionD.setBackgroundColor(getResources().getColor(R.color.correct_green))
                 }
             }
         }
@@ -243,14 +256,49 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
         }, 2000)
 
         setGamePoints()
-        val list = Pref.getList("askedQuestion").toMutableList()
-        if (list.isEmpty()) {
-            val newList: Set<String> = setOf(questionId)
-            Pref.setList("askedQuestion", newList)
-        } else {
-            list.add(questionId)
-            Pref.setList("askedQuestion", list.toSet())
-        }
+        val userAskedList = Utils.stringToMap(Pref.getValue(Constant.userAskedQuestionPref))
+        userAskedList[categoryId.toInt()]?.add(questionId.toInt())
+        Pref.setValue(Constant.userAskedQuestionPref, Utils.mapToString(userAskedList))
+        updateDocumentByUserId(
+            mapOf(
+                Constant.SCORE to Pref.getIntValue(Constant.userScorePref),
+                Constant.ASSIST_AMOUNT to Pref.getIntValue(Constant.userAssistAmountPref),
+                Constant.COINS_AMOUNT to Pref.getIntValue(Constant.userCoinsAmountPref),
+                Constant.CURRENT_LEVEL to Pref.getIntValue(Constant.userCurrentLevelPref),
+                Constant.ANSWERED_QUESTION to Pref.getValue(Constant.userAskedQuestionPref),
+                Constant.TOTAL_CORRECT_ANSWER to Pref.getIntValue(Constant.userTotalCorrectAnswerPref),
+                Constant.TOTAL_WRONG_ANSWER to Pref.getIntValue(Constant.userTotalWrongAnswerPref),
+                Constant.TOTAL_PLAYED_QUESTION to Pref.getIntValue(Constant.userTotalPlayedQuestionPref),
+                Constant.LAST_LOGIN_TIME to Utils.getCurrentTimestampInIST()
+            )
+        )
+    }
+
+    private fun updateDocumentByUserId(updatedData: Map<String, Any>) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        firestore.collection(Constant.dbUserTable)
+            .whereEqualTo(Constant.USER_ID, Pref.getValue(Constant.userIdPref))
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    firestore.collection(Constant.dbUserTable).document(document.id)
+                        .set(updatedData, SetOptions.merge())
+                        .addOnSuccessListener {
+                            e(
+                                "Firestore Log",
+                                "Document ${document.id} successfully UPDATED!"
+                            )
+                        }
+                        .addOnFailureListener { e ->
+                            e(
+                                "Firestore Log",
+                                "Error updating document ${document.id}: $e"
+                            )
+                        }
+                }
+            }
+            .addOnFailureListener { e -> e("Firestore Log", "Error getting documents: $e") }
     }
 
 
@@ -259,8 +307,9 @@ class PlayQuestionActivity : AppCompatActivity(), OnClickListener {
         startActivity(Intent(this, SelectCatQue::class.java))
         finish()
     }
+
     override fun onStop() {
         super.onStop()
-        bg_music.release()
+        bgMusic.release()
     }
 }

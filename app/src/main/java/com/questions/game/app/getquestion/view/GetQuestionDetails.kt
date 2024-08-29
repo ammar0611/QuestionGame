@@ -12,8 +12,10 @@ import com.questions.game.app.getquestion.viewmodel.GetQuestionViewModel
 import com.questions.game.databinding.ActivityGetQuestionDetailsBinding
 import com.questions.game.app.getquestion.model.Data
 import com.questions.game.app.playquestion.PlayQuestionActivity
+import com.questions.game.utils.Constant
 import com.questions.game.utils.LogUtil.e
 import com.questions.game.utils.Pref
+import com.questions.game.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
@@ -31,7 +33,7 @@ class GetQuestionDetails : AppCompatActivity() {
 
     }
 
-    private fun initView(){
+    private fun initView() {
         val bundle = intent.extras
         when (bundle?.getString("category")) {
 //            Here Index of spin wheel is get and set to viewModel
@@ -68,8 +70,8 @@ class GetQuestionDetails : AppCompatActivity() {
         viewModel.getQuestion()
     }
 
-    private fun setupObserver(){
-        viewModel.getQuestionResponse.observe(this){
+    private fun setupObserver() {
+        viewModel.getQuestionResponse.observe(this) {
             when (it) {
                 is Resource.Loading -> {
 
@@ -77,29 +79,32 @@ class GetQuestionDetails : AppCompatActivity() {
 
                 is Resource.Success -> {
                     val askedList = it.response?.data?.askedQuestionslist
-                    val list:List<String> = askedList.toString().split(",")
-                    val newList:MutableList<Data> = mutableListOf()
-                    val userAgeId = Pref.getValue("ageId")
-                    e("USER AGE ID",userAgeId)
+                    val list: List<String> = askedList.toString().split(",")
+                    val newList: MutableList<Data> = mutableListOf()
+                    val userAgeId = Pref.getValue(Constant.ageIdPref)
+                    e("USER AGE ID", userAgeId)
+                    val userAskedList =
+                        Utils.stringToMap(Pref.getValue(Constant.userAskedQuestionPref))
 
-                    for(data in it.response?.data!!.data){
-                        val ageList:List<String> = data.ageId.toString().split(",")
-                        if(data.questionMasterId.toString() !in list){
-                            if (data.questionMasterId.toString() !in Pref.getList("askedQuestion")) {
+                    for (data in it.response?.data!!.data) {
+                        val ageList: List<String> = data.ageId.toString().split(",")
+                        if (data.questionMasterId.toString() !in list) {
+                            if (userAskedList[viewModel.getCategoryNum]?.contains(data.questionMasterId) == false) {
                                 if (userAgeId in ageList) {
                                     newList.add(data)
                                 }
                             }
                         }
                     }
-                    Log.w("ALL DATA Count",it.response.data!!.data.size.toString())
-                    Log.w("ASKED Count",list.size.toString())
-                    Log.w("NEW DATA Count",newList.size.toString())
-                    Log.w("NEW DATA",newList.toString())
-                    val sendList = newList[Random.nextInt(newList.size)]
-                    e("SEND LIST",sendList.toString())
 
-                    if (sendList.question!!.isNotEmpty()){
+                    Log.w("ALL DATA Count", it.response.data!!.data.size.toString())
+                    Log.w("ASKED Count", list.size.toString())
+                    Log.w("NEW DATA Count", newList.size.toString())
+                    Log.w("NEW DATA", newList.toString())
+                    val sendList = newList[Random.nextInt(newList.size)]
+                    e("SEND LIST", sendList.toString())
+
+                    if (sendList.question!!.isNotEmpty()) {
                         val intent = Intent(this, PlayQuestionActivity::class.java)
                         intent.putExtras(sendQuestion(sendList))
                         startActivity(intent)
@@ -117,7 +122,7 @@ class GetQuestionDetails : AppCompatActivity() {
         }
     }
 
-    private fun sendQuestion(list: Data):Bundle{
+    private fun sendQuestion(list: Data): Bundle {
         val question = list.question
         val answer1 = list.answer1
         val answer2 = list.answer2
@@ -128,9 +133,20 @@ class GetQuestionDetails : AppCompatActivity() {
         val videoUrl = list.videoURL
         val questionId = list.questionMasterId.toString()
         val categoryId = list.categoryId.toString()
-        val arraylist = arrayOf(question,answer1,answer2,answer3,answer4,correctAnswer,imageUrl,videoUrl,questionId,categoryId)
+        val arraylist = arrayOf(
+            question,
+            answer1,
+            answer2,
+            answer3,
+            answer4,
+            correctAnswer,
+            imageUrl,
+            videoUrl,
+            questionId,
+            categoryId,
+        )
         val bundle = Bundle()
-        bundle.putStringArray("LIST",arraylist)
+        bundle.putStringArray("LIST", arraylist)
         return bundle
     }
 }
