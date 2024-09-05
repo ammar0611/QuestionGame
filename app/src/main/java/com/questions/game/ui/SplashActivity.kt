@@ -8,12 +8,17 @@ import android.provider.Settings
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.initialize
 import com.questions.game.R
 import com.questions.game.utils.Constant
 import com.questions.game.utils.LogUtil.e
 import com.questions.game.utils.Pref
 import com.questions.game.utils.Utils
+import java.util.Arrays
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var UDID: String

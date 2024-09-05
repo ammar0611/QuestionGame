@@ -8,5 +8,11 @@
     android:orientation="vertical"
     tools:context=".ui.Test">
 
-
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/blue"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/9214589741" />
 </LinearLayout>
