@@ -6,7 +6,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".app.gamedetails.GameDetails"
     android:orientation="vertical"
     android:padding="20dp">
@@ -120,9 +119,10 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:text="Next"
+        android:background="@drawable/bgbutton1"
         android:layout_marginTop="20dp"
         android:layout_gravity="center|right"/>
 

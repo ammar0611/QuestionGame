@@ -4,6 +4,7 @@ package com.questions.game.utils
 object Constant{
 
     const val BASEURL="https://arshikweb.com/"
+    const val BASEURL1="https://ammar0611.github.io/api/"
     const val PREF_NAME="MyPref"
 
     val selectedItems = mutableSetOf<Int>()

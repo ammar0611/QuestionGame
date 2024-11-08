@@ -39,7 +39,7 @@ object APIClient {
                     .create()
 
                 retrofit = Retrofit.Builder()
-                    .baseUrl(Constant.BASEURL)
+                    .baseUrl(Constant.BASEURL1)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()

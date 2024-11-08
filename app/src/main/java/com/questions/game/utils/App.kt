@@ -20,8 +20,6 @@ class App : Application() {
         val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
         MobileAds.setRequestConfiguration(configuration)
         Firebase.initialize(this)
-        MobileAds.initialize(this) {initializationStatus ->
-            e("MobileAds", "Admob initialized")
-        }
+        MobileAds.initialize(this@App) {}
     }
 }
