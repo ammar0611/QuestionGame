@@ -54,10 +54,9 @@
                     android:layout_height="match_parent">
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_nextquestion"
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="Next Question"
-                        android:background="@drawable/bgbutton1"
                         android:layout_centerInParent="true"
                         android:layout_alignParentRight="true"
                         android:visibility="gone"/>

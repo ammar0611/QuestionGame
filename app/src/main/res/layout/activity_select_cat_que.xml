@@ -12,9 +12,8 @@
         android:id="@+id/btn_spin"
         android:layout_toRightOf="@id/rl"
         android:layout_centerInParent="true"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:background="@drawable/bgbutton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Spin"/>
 
     <RelativeLayout

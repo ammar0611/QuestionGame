@@ -1,6 +1,5 @@
 package com.questions.game.ui
 
-import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -26,7 +25,7 @@ class Test : AppCompatActivity() {
         setContentView(binding.root)
         Pref.initialize(this)
 
-        MobileAds.initialize(this)
+//        MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
